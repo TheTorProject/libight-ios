@@ -14,6 +14,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone; // remove separator
+    self.tableView.backgroundColor = [UIColor colorNamed:@"color_gray1"];
     [NavigationBarUtility setNavigationBar:self.navigationController.navigationBar];
     categories = [SettingsUtility getSettingsCategories];
 }
@@ -45,6 +47,7 @@
     cell.textLabel.text = [LocalizationUtility getNameForSetting:current];
     cell.textLabel.textColor = [UIColor colorNamed:@"color_gray9"];
     cell.imageView.image = [UIImage imageNamed:current];
+    cell.backgroundColor = [UIColor colorNamed:@"color_gray1"];
     return cell;
 }
 

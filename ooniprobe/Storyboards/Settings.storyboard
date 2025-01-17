@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -485,7 +485,7 @@ measurement-kit: x.y.z</string>
                                                 </connections>
                                             </button>
                                         </subviews>
-                                        <color key="backgroundColor" name="color_white"/>
+                                        <color key="backgroundColor" name="color_gray1"/>
                                         <constraints>
                                             <constraint firstItem="Iza-Qi-7Xv" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="xfk-C4-Iuo" secondAttribute="leading" constant="20" id="4Kw-WJ-ueF"/>
                                             <constraint firstItem="fJM-Cs-r96" firstAttribute="leading" secondItem="xfk-C4-Iuo" secondAttribute="leading" constant="50" id="4pO-eI-vIW"/>
@@ -511,7 +511,7 @@ measurement-kit: x.y.z</string>
                                         </constraints>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" name="color_white"/>
+                                <color key="backgroundColor" name="color_gray1"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="xfk-C4-Iuo" secondAttribute="trailing" id="2Kd-OF-Z7Y"/>
                                     <constraint firstItem="xfk-C4-Iuo" firstAttribute="centerX" secondItem="3N7-0b-kY4" secondAttribute="centerX" id="9Fe-x9-m9l"/>
@@ -522,7 +522,7 @@ measurement-kit: x.y.z</string>
                             </scrollView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="fbM-Vh-umg"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" name="color_gray1"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="3N7-0b-kY4" secondAttribute="trailing" id="FPu-ao-rZn"/>
                             <constraint firstItem="HIX-ry-9k4" firstAttribute="top" secondItem="3N7-0b-kY4" secondAttribute="bottom" id="Ma8-Oi-BT9"/>

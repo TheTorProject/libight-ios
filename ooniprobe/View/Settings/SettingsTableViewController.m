@@ -54,6 +54,8 @@
     //hide rows smooth
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone; // remove separator
+        self.tableView.backgroundColor = [UIColor colorNamed:@"color_gray1"];
     });
 }
 
@@ -63,8 +65,9 @@
         [testSuite.testList removeAllObjects];
         [testSuite getTestList];
     }
-    if (testSuite != nil || [[TestUtility getTestOptionTypes] containsObject:category])
+    if (testSuite != nil) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"settingsChanged" object:nil];
+    }
 }
 
 #pragma mark - Table view data source
@@ -113,9 +116,6 @@
         else {
             cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
         }
-        if ([[TestUtility getTestOptionTypes] containsObject:current]){
-            cell.imageView.image = [UIImage imageNamed:current];
-        }
         cell.textLabel.text = [LocalizationUtility getNameForSetting:current];
         cell.textLabel.textColor = [UIColor colorNamed:@"color_gray9"];
         UISwitch *switchview = [[UISwitch alloc] initWithFrame:CGRectZero];
@@ -132,13 +132,7 @@
         }
         else
             cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-        if ([[TestUtility getTestOptionTypes] containsObject:current]){
-            if ([NSLocale characterDirectionForLanguage:[NSLocale preferredLanguages][0]] == NSLocaleLanguageDirectionRightToLeft) {
-                cell.imageView.image = [self imageWithImage:[UIImage imageNamed:current] convertToSize:CGSizeMake(32, 32)];
-            } else {
-                cell.imageView.image = [UIImage imageNamed:current];
-            }
-        }
+
         cell.textLabel.text = [LocalizationUtility getNameForSetting:current];
         cell.textLabel.textColor = [UIColor colorNamed:@"color_gray9"];
         cell.accessoryView = nil;
@@ -188,6 +182,7 @@
             cell.accessoryView = cleanButton;
         }
     }
+    cell.backgroundColor = [UIColor colorNamed:@"color_gray1"];
     return cell;
 }
 

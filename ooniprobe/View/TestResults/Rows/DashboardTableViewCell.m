@@ -5,7 +5,6 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     [self setRoundedView];
-    [self setShadow];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -13,63 +12,20 @@
     // Configure the view for the selected state
 }
 
-- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated{
-    [super setHighlighted:highlighted animated:animated];
-    if (highlighted) {
-        [UIView
-            animateWithDuration:0.3f
-            delay:0
-            options:UIViewAnimationOptionCurveEaseOut
-            animations:^{
-                self.contentView.layer.shadowOpacity = 0;
-                self.contentView.alpha = 0.7f;
-            }
-            completion: NULL
-         ];
-    } else {
-        [UIView
-         animateWithDuration:0.8f
-         delay:0.5f
-         options:UIViewAnimationOptionCurveEaseInOut
-         animations:^{
-             self.contentView.layer.shadowOpacity = 0.6f;
-             self.contentView.alpha = 1.f;
-         }
-         completion: NULL
-        ];
-    }
-}
-
--(void)setTestSuite:(AbstractSuite*)testSuite{
-    [self.titleLabel setText:[LocalizationUtility getNameForTest:testSuite.name]];
-    [self.descLabel setText:[LocalizationUtility getDescriptionForTest:testSuite.name]];
-    if (testSuite.getTestList.count <= 0) {
-        [self.titleLabel setTextColor:[UIColor colorNamed:@"disabled_test_text"]];
-        [self.descLabel setTextColor:[UIColor colorNamed:@"disabled_test_text"]];
-        [self.testLogo setImage:[self imageWithGradient:[UIImage imageNamed:[NSString stringWithFormat:@"%@", testSuite.name]] startColor:[UIColor colorNamed:@"disabled_test_text"] endColor:[UIColor colorNamed:@"disabled_test_text"]]];
-        [self.cardbackgroundView setBackgroundColor:[UIColor colorNamed:@"disabled_test_background"]];
-    } else {
-        [self.titleLabel setTextColor:[UIColor colorNamed:@"color_gray9"]];
-        [self.descLabel setTextColor:[UIColor colorNamed:@"color_gray9"]];
-        [self.testLogo setImage:[self imageWithGradient:[UIImage imageNamed:[NSString stringWithFormat:@"%@", testSuite.name]] startColor:[TestUtility getGradientColorForTest:testSuite.name] endColor:[TestUtility getColorForTest:testSuite.name]]];
-        [self.cardbackgroundView setBackgroundColor:[UIColor colorNamed:@"color_gray0"]];
-    }
+-(void)setDescriptor:(OONIDescriptor*)descriptor{
+    [self.titleLabel setText:descriptor.title];
+    [self.descLabel setText:descriptor.shortDescription];
+    [self.titleLabel setTextColor:[UIColor colorNamed:@"color_gray9"]];
+    [self.descLabel setTextColor:[UIColor colorNamed:@"color_gray9"]];
+    [self.cardbackgroundView setBackgroundColor:[UIColor colorNamed:@"color_gray0"]];
+    [self.testLogo setImage:[self imageWithGradient:[UIImage imageNamed:descriptor.icon] startColor:[TestUtility getGradientColorForTest:descriptor.name] endColor:[TestUtility getColorForTest:descriptor.name]]];
 }
 
 -(void)setRoundedView{
-    self.cardbackgroundView.layer.cornerRadius = 5;
+    self.cardbackgroundView.layer.cornerRadius = 8;
     self.cardbackgroundView.layer.masksToBounds = YES;
-}
-
--(void)setShadow{
-    self.backgroundColor = [UIColor clearColor];
-    self.contentView.backgroundColor = [UIColor clearColor];
-    
-    self.contentView.layer.shadowRadius  = 5;
-    self.contentView.layer.shadowColor   = [[UIColor blackColor] colorWithAlphaComponent:0.8f].CGColor;
-    self.contentView.layer.shadowOffset  = CGSizeMake(0.0f, 1);
-    self.contentView.layer.shadowOpacity = 0.6f;
-    self.contentView.layer.masksToBounds = NO;
+    self.cardbackgroundView.layer.borderColor = [UIColor colorNamed:@"color_gray3"].CGColor;
+    self.cardbackgroundView.layer.borderWidth = 2.0;
 }
 
 //From https://stackoverflow.com/questions/8098130/how-can-i-tint-a-uiimage-with-gradient

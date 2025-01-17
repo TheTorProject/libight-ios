@@ -6,7 +6,7 @@
 @implementation SettingsUtility
 
 + (NSArray*)getSettingsCategories{
-    return @[@"notifications", @"automated_testing", @"test_options", @"privacy", @"advanced", @"ooni_backend_proxy", @"send_email", @"about_ooni"];
+    return @[@"notifications", @"test_options", @"privacy", @"advanced", @"ooni_backend_proxy", @"send_email", @"about_ooni"];
 }
 
 + (NSArray*)getSettingsForCategory:(NSString*)categoryName{
@@ -15,10 +15,11 @@
         return @[@"notifications_enabled"];
     }
     if ([categoryName isEqualToString:@"automated_testing"]) {
-        if ([SettingsUtility isAutomatedTestEnabled])
+        if ([SettingsUtility isAutomatedTestEnabled]) {
             return @[@"automated_testing_enabled", @"automated_testing_wifionly", @"automated_testing_charging"];
-        else
+        } else {
             return @[@"automated_testing_enabled"];
+        }
     }
     else if ([categoryName isEqualToString:@"privacy"]) {
         return @[@"upload_results", @"send_crash"];
@@ -28,25 +29,25 @@
         return @[@"AppleLanguages", @"debug_logs", @"storage_usage" , @"warn_vpn_in_use"];
     }
     else if ([categoryName isEqualToString:@"test_options"]) {
-        return [TestUtility getTestOptionTypes];
-    }
-    else if ([[TestUtility getTestOptionTypes] containsObject:categoryName])
-        return [SettingsUtility getSettingsForTest:categoryName :YES];
-    else
+        return @[@"automated_testing_enabled", @"automated_testing_wifionly", @"automated_testing_charging", @"website_categories", @"max_runtime_enabled", @"max_runtime"];
+    } else {
         return nil;
+    }
 }
 
 + (NSString*)getTypeForSetting:(NSString*)setting{
-    if ([setting isEqualToString:@"experimental"] || [setting isEqualToString:@"long_running_tests_in_foreground"])
+    if ([setting isEqualToString:@"experimental"] || [setting isEqualToString:@"long_running_tests_in_foreground"]) {
         return @"bool";
-    else if ([setting isEqualToString:@"website_categories"] || [[TestUtility getTestOptionTypes] containsObject:setting])
+    } else if ([setting isEqualToString:@"website_categories"]) {
         return @"segue";
-    else if ([setting isEqualToString:@"monthly_mobile_allowance"] ||
-             [setting isEqualToString:@"monthly_wifi_allowance"] ||
-             [setting isEqualToString:@"max_runtime"])
+    } else if ([setting isEqualToString:@"monthly_mobile_allowance"] ||
+        [setting isEqualToString:@"monthly_wifi_allowance"] ||
+        [setting isEqualToString:@"max_runtime"]) {
         return @"int";
-    if ([setting isEqualToString:@"storage_usage"] || [setting isEqualToString:@"AppleLanguages"])
+    }
+    if ([setting isEqualToString:@"storage_usage"] || [setting isEqualToString:@"AppleLanguages"]) {
         return @"button";
+    }
     return @"bool";
 }
 

@@ -3,6 +3,7 @@
 #import "ThirdPartyServices.h"
 #import "Suite.h"
 #import "RunningTest.h"
+#import "ooniprobe-Swift.h"
 
 @interface DashboardTableViewController ()
 
@@ -83,19 +84,19 @@
 -(void)setShadowRunButton{
     self.runButton.layer.cornerRadius = 20;
     self.runButton.layer.masksToBounds = YES;
+    [self.runButton setImage:[self resizeImage:[UIImage imageNamed:@"timer"] newWidth:23 newHeight:25] forState:UIControlStateNormal];
+    self.runButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    self.runButton.imageEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
+    self.runButton.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
     [self.runButton setTitle:[NSString stringWithFormat:@"%@", NSLocalizedString(@"Dashboard.Card.Run", nil)] forState:UIControlStateNormal];
 
     self.viewForShadowRunButton.backgroundColor = [UIColor clearColor];
-    
-    self.viewForShadowRunButton.layer.shadowRadius  = 5.0f;
+
     self.viewForShadowRunButton.layer.shadowColor   = [[UIColor colorNamed:@"color_black"] colorWithAlphaComponent:0.8f].CGColor;
-    self.viewForShadowRunButton.layer.shadowOffset  = CGSizeMake(0.0f, 2.0f);
-    self.viewForShadowRunButton.layer.shadowOpacity = 0.6f;
-    self.viewForShadowRunButton.layer.masksToBounds = NO;
 }
 
 -(void)loadTests{
-    items = [TestUtility getTestObjects];
+    items = [[OONIDescriptor getOONIDescriptors] mutableCopy];
     [self.tableView reloadData];
 }
 
@@ -127,16 +128,28 @@
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     DashboardTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-    AbstractSuite *test = [items objectAtIndex:indexPath.row];
+    OONIDescriptor *test = [items objectAtIndex:indexPath.row];
     if (cell == nil) {
         cell = [[DashboardTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
     }
-    [cell setTestSuite:test];
+    [cell setDescriptor:test];
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 }
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    if (section == 0) {
+        return @"OONI TESTS";
+    }
+    return @"";
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 20;
+}
+
 
 -(IBAction)run:(id)sender{
     if ([TestUtility checkConnectivity:self] &&
@@ -152,7 +165,12 @@
 -(IBAction)runAll{
     if ([TestUtility checkConnectivity:self] &&
         [TestUtility checkTestRunning:self]){
-        [[RunningTest currentTest] setAndRun:[NSMutableArray arrayWithArray:items] inView: self];
+        // convert items to DynamicTestSuite
+        NSMutableArray *testSuites = [[NSMutableArray alloc] init];
+        for (OONIDescriptor *decriptor in self.items){
+            [testSuites addObject:[[DynamicTestSuite alloc] initWithDescriptor:decriptor]];
+        }
+        [[RunningTest currentTest] setAndRun:testSuites inView: self];
         [self reloadConstraints];
     }
 }
@@ -161,10 +179,10 @@
     if ([[segue identifier] isEqualToString:@"toTestOverview"]){
         NSIndexPath* indexPath = [self.tableView indexPathForSelectedRow];
         TestOverviewViewController *vc = (TestOverviewViewController * )segue.destinationViewController;
-        AbstractSuite *testSuite = [items objectAtIndex:indexPath.row];
-        [vc setTestSuite:testSuite];
+        OONIDescriptor *test = [items objectAtIndex:indexPath.row];
+        [vc setDescriptor:test];
         [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-    }    
+    }
 }
 
 

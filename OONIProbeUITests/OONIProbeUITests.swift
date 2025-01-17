@@ -149,11 +149,11 @@ class OONIProbeUITests: XCTestCase {
         XCTAssertFalse(tablesQuery.cells.element(boundBy: 0).images["not_uploaded_icon"].exists)
         
         settingsButton.tap()
-        tablesQuery.cells.element(boundBy: 3).tap()
-        let resultSwitch = tablesQuery.cells.element(boundBy: 0).children(matching: .switch).element
+        tablesQuery.cells.element(boundBy: 2).tap() // Privacy Settings
+        let resultSwitch = tablesQuery.cells.element(boundBy: 0).children(matching: .switch).element // Automatically publish results
         
         if ((resultSwitch.value as? String) == "1"){
-            resultSwitch.tap()
+            resultSwitch.tap() // turn off automatic publishing of results
         }
         
         //From https://stackoverflow.com/questions/44222966/from-an-xcuitest-how-can-i-check-the-on-off-state-of-a-uiswitch

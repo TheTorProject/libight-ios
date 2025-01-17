@@ -12,7 +12,7 @@
     UIColor *defaultColor;
 }
 
-@property (nonatomic, strong) AbstractSuite *testSuite;
+@property (nonatomic, strong) id descriptor;
 
 @property (strong, nonatomic) IBOutlet UIImageView *testImage;
 @property (strong, nonatomic) IBOutlet UILabel *testNameLabel;

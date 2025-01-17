@@ -12,6 +12,8 @@
     self.navigationController.navigationBar.topItem.title = @"";
     self.tableView.estimatedRowHeight = 60.0;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone; // remove separator
+    self.tableView.backgroundColor = [UIColor colorNamed:@"color_gray1"];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -52,6 +54,8 @@
     if ([categories_disabled containsObject:current]) switchview.on = NO;
     else switchview.on = YES;
     cell.accessoryView = switchview;
+
+    cell.backgroundColor = [UIColor colorNamed:@"color_gray1"];
 
     return cell;
 }
